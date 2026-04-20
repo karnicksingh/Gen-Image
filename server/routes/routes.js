@@ -134,7 +134,10 @@ console.log("S3 URL:" , imageUrl)
 routes.get("/profile", auth,async (req, res) => {
     const user=  await User.findById(req.user.id);
     res.json({
-      credits:user.credits
+      credits:user.credits,
+      name:user.name,
+      email:user.email,
+
     });
 });
 

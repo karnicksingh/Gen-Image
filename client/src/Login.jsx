@@ -70,6 +70,7 @@ let handleSubmit= async (event)=>{
                             <Button type="submit" variant="contained">Sumbit</Button>
                         </form>
                         <br />
+                        <p>Don't have an account?</p>
                         <Button  variant="contained" onClick={()=>{
                             navigate("/register")
                         }}>Register</Button>
