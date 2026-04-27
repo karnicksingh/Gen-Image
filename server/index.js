@@ -5,12 +5,15 @@ const cors = require("cors");
 const connectDB = require("./config/db.js")
 
 const app = express();
-
+  app.set("trust proxy",1);
 
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors({
-    origin:"http://localhost:5173",
+    origin:["http://localhost:5173",
+        "https://gen-image-tac6.onrender.com"
+
+    ],
     credentials:true
 }));
 

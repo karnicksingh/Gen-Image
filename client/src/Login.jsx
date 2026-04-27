@@ -15,7 +15,7 @@ import './login.css';
 
 export default  function Login(){
     let[data,setData]=useState({email:"",password:""});
- 
+    const API= import.meta.env.VITE_API_URL;
     let navigate = useNavigate();
   
     let handleChange =(event)=>{
@@ -31,7 +31,7 @@ let handleSubmit= async (event)=>{
     event.preventDefault();
     try{
       const response = await axios.post(
-          "http://localhost:8000/login",data,{
+          `${API}/login`,data,{
             withCredentials:true
           }
       );

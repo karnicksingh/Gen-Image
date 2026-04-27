@@ -47,11 +47,12 @@ routes.post("/register", async (req, res) => {
         process.env.JWT_SECRET,
         {expiresIn:"1h"}
       );
-
+// modified for deployment
+const isProud=process.env.NODE_ENV==="production";
       res.cookie("token",token,{
         httpOnly:true,
-        secure:false,
-        sameSite:"lax"
+        secure:isProud,
+        sameSite:isProud? "None" :"Lax"
       });
      
       res.json({
@@ -150,11 +151,12 @@ routes.get("/images", auth,async (req, res) => {
   }
 });
 
+const isProud=process.env.NODE_ENV==="production";
 routes.post("/logout", (req, res) => {
     res.clearCookie("token",{
       httpOnly:true,
-      sameSite:"lax",
-      secure:false
+      secure:isProud,
+        sameSite:isProud ? "None" :"Lax"
     }
     );
 

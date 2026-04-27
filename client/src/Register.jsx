@@ -13,7 +13,7 @@ import axios from 'axios';
 
 export default function Register() {
     let[data,setData]=useState({name:"",email:"",password:""});
-
+    const API= import.meta.env.VITE_API_URL;
     let handleChange =(event)=>{
         let fieldName= event.target.name;
         let newValue= event.target.value;
@@ -26,7 +26,9 @@ export default function Register() {
       event.preventDefault();
       try{
         const response = await axios.post(
-            "http://localhost:8000/register",data
+            `${API}/register`,data,{
+                withCredentials:true
+            }
         );
         alert(response.data); 
         setData({
