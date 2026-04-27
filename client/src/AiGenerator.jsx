@@ -7,11 +7,14 @@ export default function AiGenerator() {
   const [prompt, setPrompt] = useState("");
   const [image, setImage] = useState("");
   const [credits, setCredits] = useState(0);
+   
+  const API= import.meta.env.VITE_API_URL;
+  console.log(API);
 
   useEffect(() => {
     const fetchCredits = async () => {
       try {
-        const res = await fetch("http://localhost:8000/profile", {
+        const res = await fetch(`${API}/profile`, {
           credentials: "include"
         });
         console.log("fetching profile");
@@ -27,7 +30,7 @@ export default function AiGenerator() {
 
   const generateImage = async () => {
     try {
-      const res = await fetch("http://localhost:8000/generate", {
+      const res = await fetch(`${API}/generate`, {
         method: "post",
         credentials: "include",
         headers: { "Content-Type": "application/json" },
@@ -75,7 +78,7 @@ export default function AiGenerator() {
 
           {/* Input */}
           <input
-            className=" w-full border border-gray-300 rounded-lg bg-transparent border border-green-500/30 text-white text-sm focus:outline-none focus:ring-2 focus:ring-green-500/30 px-3 py-2 "
+            className=" w-full  rounded-lg bg-transparent border border-green-500/30 text-white text-sm focus:outline-none focus:ring-2 focus:ring-green-500/30 px-3 py-2 "
             placeholder="Enter prompt"
             value={prompt}
             onChange={(e) => setPrompt(e.target.value)}
@@ -87,7 +90,7 @@ export default function AiGenerator() {
               disabled={credits === 0}
               onClick={generateImage}
               className=" w-full mt-4 py-2 rounded-lg bg-green-500 text-black font-semibold hover bg-blue-600 hover: bg-green-500 disabled:bg-gray-3400 disabled:cursor-not-allowed"
-            >
+             >
               Generate Image
             </button>
           </div>

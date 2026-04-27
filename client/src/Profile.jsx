@@ -7,7 +7,8 @@ import { FiUser } from "react-icons/fi";
 export default function Profile() {
   const [images, setImages] = useState([]);
   const [user, setUser] = useState(null);
-
+  const API= import.meta.env.VITE_API_URL;
+  console.log(API);
   useEffect(() => {
     fetchImage();
     fetchUser();
@@ -50,7 +51,7 @@ export default function Profile() {
 
   const fetchImage = async () => {
     try {
-      const res = await fetch("http://localhost:8000/images", {
+      const res = await fetch(`${API}/images`, {
         credentials: 'include',
       });
 
@@ -64,7 +65,7 @@ export default function Profile() {
   }
   const fetchUser = async () => {
     try {
-      const res = await fetch("http://localhost:8000/profile", {
+      const res = await fetch(`${API}/profile`, {
         credentials: 'include',
       });
 

@@ -1,10 +1,10 @@
 import { useNavigate } from 'react-router-dom';
 export default function Navbar({ credits }) {
     const navigate = useNavigate();
-  
+    const API= import.meta.env.VITE_API_URL;
     const handleLogout = async () => {
         try {
-          await fetch("http://localhost:8000/logout", {
+          await fetch(`${API}/logout`, {
             method: "POST",
             credentials: "include"
           });
