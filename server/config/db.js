@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 
 const connectDB =async()=>{
     try{
-        await mongoose.connect("mongodb://127.0.0.1:27017/AI-Database");
+        await mongoose.connect("mongodb+srv://admin:0004@genimage.1btltct.mongodb.net/");
         console.log("DB connected");
 
     }catch(error){
