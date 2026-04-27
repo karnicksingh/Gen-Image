@@ -11,7 +11,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { useState,useEffect} from 'react';
 import axios from 'axios';
-import './login.css';
+import './Login.css';
 
 export default  function Login(){
     let[data,setData]=useState({email:"",password:""});
