@@ -10,9 +10,10 @@ const app = express();
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors({
-    origin:["http://localhost:5173",
-        "https://gen-image-blond.vercel.app"
-    ],
+    // origin:["http://localhost:5173",
+    //     "https://gen-image-blond.vercel.app"
+    // ],
+    origin:"https://gen-image-blond.vercel.app",
     credentials:true
 }));
 
