@@ -11,7 +11,7 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(cors({
     origin:["http://localhost:5173",
-        "https://gen-image-tac6.onrender.com"
+        "https://gen-image-blond.vercel.app/"
     ],
     credentials:true
 }));
