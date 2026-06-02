@@ -48,11 +48,13 @@ routes.post("/register", async (req, res) => {
         {expiresIn:"1h"}
       );
 // modified for deployment
-const isProud=process.env.NODE_ENV==="production";
+// const isProud=process.env.NODE_ENV==="production";
+const isProud=true;
       res.cookie("token",token,{
         httpOnly:true,
         secure:isProud,
-        sameSite:isProud? "None" :"Lax"
+        // sameSite:isProud? "None" :"Lax"
+        sameSite: "None"
       });
      
       res.json({
@@ -151,12 +153,14 @@ routes.get("/images", auth,async (req, res) => {
   }
 });
 
-const isProud=process.env.NODE_ENV==="production";
+// const isProud=process.env.NODE_ENV==="production";
+const isProud=true;
 routes.post("/logout", (req, res) => {
     res.clearCookie("token",{
       httpOnly:true,
       secure:isProud,
-        sameSite:isProud ? "None" :"Lax"
+        // sameSite:isProud ? "None" :"Lax"
+        sameSite: "None"
     }
     );
 
