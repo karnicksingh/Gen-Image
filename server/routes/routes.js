@@ -54,7 +54,8 @@ const isProud=true;
         httpOnly:true,
         secure:isProud,
         // sameSite:isProud? "None" :"Lax"
-        sameSite: "None"
+        sameSite: "None",
+        path:"/"
       });
      
       res.json({
@@ -160,7 +161,8 @@ routes.post("/logout", (req, res) => {
       httpOnly:true,
       secure:isProud,
         // sameSite:isProud ? "None" :"Lax"
-        sameSite: "None"
+        sameSite: "None",
+        path:"/"
     }
     );
 

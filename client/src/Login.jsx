@@ -38,6 +38,7 @@ export default function Login() {
                     padding:"12px"
                 },
             });
+            console.log(document.cookie);
             setData({
                 email: "",
                 password: "",
