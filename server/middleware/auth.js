@@ -3,7 +3,9 @@ const jwt = require("jsonwebtoken");
 const auth=(req,res,next)=>{
     const token = req.cookies.token;
     if(!token){
-        return res.status(400).send("No token , Access denied");
+        return res.status(400).json({
+            message:"No token , Acess denied"
+        });
     }
 
     try{
@@ -13,9 +15,11 @@ const auth=(req,res,next)=>{
 
         next();
     }catch(error){
-        return res.status(401).send("Invalid token");
-    }
+        return res.status(401).json({
+            message:"Invalid Token"
+    });
 };
+}
 
 
 module.exports=auth;
