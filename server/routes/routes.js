@@ -78,7 +78,7 @@ try{
     if(!prompt){
         return  res.status(400).json({error:"Prompt is requirde"});
     }
-const response =await axios.post(
+const response = await axios.post(
 "https://ai.api.nvidia.com/v1/genai/black-forest-labs/flux.2-klein-4b",
 {
     "prompt": prompt,
@@ -88,6 +88,7 @@ const response =await axios.post(
     "steps": 4
   },
   {
+  timeout: 60000,
   headers : {
     "Authorization": `Bearer ${process.env.API_NVIDIA}`,
     "Content-Type": "application/json",
@@ -125,10 +126,6 @@ res.json({
 console.log("S3 URL:" , imageUrl)
 
 }catch(error){
-    // console.error("Full Error",error);
-    // console.error("API Error",error.response?.data);
-    // res.status(500).json({error:"Image generation failed"});
-    // console.log("ENV CHECK",process.env.API_NVIDIA,process.env.AWS_REGION);
       console.log("========== ERROR ==========");  
       console.log(error.message);
       if(error.response){
@@ -136,7 +133,10 @@ console.log("S3 URL:" , imageUrl)
           console.log(error.response.data);
       }
       res.status(500).json({
-          error:"Image generation failed"
+          error: "Image generation failed",
+          detail: error.message,
+          apiStatus: error.response?.status || null,
+          apiError: error.response?.data || null,
       });
   }
 });

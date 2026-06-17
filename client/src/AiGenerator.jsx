@@ -37,10 +37,16 @@ export default function AiGenerator() {
         body: JSON.stringify({ prompt }),
       });
       const data = await res.json();
+      if (!res.ok) {
+        console.error("Generate Error:", data);
+        alert(`Error: ${data.detail || data.error}\nAPI Status: ${data.apiStatus}\nAPI Error: ${JSON.stringify(data.apiError)}`);
+        return;
+      }
       setImage(data.imageUrl);
       setCredits(data.creditsLeft);
     } catch (error) {
       console.log(error);
+      alert("Network error: " + error.message);
     }
   };
 
