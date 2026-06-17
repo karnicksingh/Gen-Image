@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import Navbar from "./Navbar.jsx"
+import toast from 'react-hot-toast';
 
 
 export default function AiGenerator() {
@@ -39,14 +40,25 @@ export default function AiGenerator() {
       const data = await res.json();
       if (!res.ok) {
         console.error("Generate Error:", data);
-        alert(`Error: ${data.detail || data.error}\nResponse Keys: ${JSON.stringify(data.responseKeys)}\nSample: ${data.responseSample}`);
+        toast.error(data.error || "Image generation failed", {
+          style: {
+            background: "#111827", color: "white",
+            border: "1px solid #ef4444", borderRadius: "10px", padding: "12px"
+          },
+          duration: 5000,
+        });
         return;
       }
       setImage(data.imageUrl);
       setCredits(data.creditsLeft);
     } catch (error) {
       console.log(error);
-      alert("Network error: " + error.message);
+      toast.error("Network error: " + error.message, {
+        style: {
+          background: "#111827", color: "white",
+          border: "1px solid #ef4444", borderRadius: "10px", padding: "12px"
+        },
+      });
     }
   };
 

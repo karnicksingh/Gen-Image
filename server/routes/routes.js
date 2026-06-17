@@ -99,15 +99,18 @@ const response = await axios.post(
 );
 
 console.log("NVIDIA RAW RESPONSE KEYS:", Object.keys(response.data || {}));
-console.log("NVIDIA RAW RESPONSE:", JSON.stringify(response.data).slice(0, 500));
 
-// Try all possible field paths NVIDIA uses across models
-const imageBase64 = 
-    response.data?.artifacts?.[0]?.base64 ||           // flux/older models
-    response.data?.data?.[0]?.b64_json ||              // OpenAI-compat models  
-    response.data?.images?.[0]?.b64_json ||            // some NIM models
-    response.data?.image ||                            // direct field
-    response.data?.output?.image;                      // wrapped output
+const artifact = response.data?.artifacts?.[0];
+const finishReason = artifact?.finishReason;
+
+// Content was blocked by NVIDIA's safety filter
+if(finishReason === "CONTENT_FILTERED"){
+    return res.status(400).json({
+        error: "Your prompt was blocked by the content filter. Please try a different prompt (avoid copyrighted characters, violent or adult content)."
+    });
+}
+
+const imageBase64 = artifact?.base64;
 
 if(!imageBase64){
     console.log("FULL RESPONSE DATA:", JSON.stringify(response.data));
