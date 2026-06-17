@@ -47,15 +47,11 @@ routes.post("/register", async (req, res) => {
         process.env.JWT_SECRET,
         {expiresIn:"1h"}
       );
-// modified for deployment
-// const isProud=process.env.NODE_ENV==="production";
-const isProud=true;
+      const isProduction = process.env.NODE_ENV === "production";
       res.cookie("token",token,{
         httpOnly:true,
-        secure:isProud,
-        // sameSite:isProud? "None" :"Lax"
-        sameSite: "None",
-        path:"/"
+        secure: isProduction,
+        sameSite: isProduction ? "None" : "Lax",
       });
      
       res.json({
@@ -68,12 +64,13 @@ const isProud=true;
     
     } catch(error){
       console.log(error);
-      res.send(500).send("Login error");
- 
+      res.status(500).send("Login error");
     }
   });
 
 routes.post("/generate",auth,checkCredits,async (req, res) => {
+
+
 try{
     const {prompt}=req.body;
 
@@ -128,11 +125,20 @@ res.json({
 console.log("S3 URL:" , imageUrl)
 
 }catch(error){
-    console.error("Full Error",error);
-    console.error("API Error",error.response?.data);
-    res.status(500).json({error:"Image generation failed"});
-    console.log("ENV CHECK",process.env.API_NVIDIA,process.env.AWS_REGION);
-}
+    // console.error("Full Error",error);
+    // console.error("API Error",error.response?.data);
+    // res.status(500).json({error:"Image generation failed"});
+    // console.log("ENV CHECK",process.env.API_NVIDIA,process.env.AWS_REGION);
+      console.log("========== ERROR ==========");  
+      console.log(error.message);
+      if(error.response){
+          console.log(error.response.status);
+          console.log(error.response.data);
+      }
+      res.status(500).json({
+          error:"Image generation failed"
+      });
+  }
 });
 
 routes.get("/profile", auth,async (req, res) => {
@@ -155,16 +161,13 @@ routes.get("/images", auth,async (req, res) => {
 });
 
 // const isProud=process.env.NODE_ENV==="production";
-const isProud=true;
+// const isProud=true;
 routes.post("/logout", (req, res) => {
     res.clearCookie("token",{
       httpOnly:true,
-      secure:isProud,
-        // sameSite:isProud ? "None" :"Lax"
-        sameSite: "None",
-        path:"/"
-    }
-    );
+      secure: process.env.NODE_ENV === "production",
+      sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax",
+    });
 
     res.json({message:"logout Sucessfully"})
 });
