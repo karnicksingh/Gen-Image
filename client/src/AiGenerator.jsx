@@ -39,7 +39,7 @@ export default function AiGenerator() {
       const data = await res.json();
       if (!res.ok) {
         console.error("Generate Error:", data);
-        alert(`Error: ${data.detail || data.error}\nAPI Status: ${data.apiStatus}\nAPI Error: ${JSON.stringify(data.apiError)}`);
+        alert(`Error: ${data.detail || data.error}\nResponse Keys: ${JSON.stringify(data.responseKeys)}\nSample: ${data.responseSample}`);
         return;
       }
       setImage(data.imageUrl);

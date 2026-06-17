@@ -98,10 +98,24 @@ const response = await axios.post(
     
 );
 
-const imageBase64 = response.data?.artifacts?.[0]?.base64;
+console.log("NVIDIA RAW RESPONSE KEYS:", Object.keys(response.data || {}));
+console.log("NVIDIA RAW RESPONSE:", JSON.stringify(response.data).slice(0, 500));
+
+// Try all possible field paths NVIDIA uses across models
+const imageBase64 = 
+    response.data?.artifacts?.[0]?.base64 ||           // flux/older models
+    response.data?.data?.[0]?.b64_json ||              // OpenAI-compat models  
+    response.data?.images?.[0]?.b64_json ||            // some NIM models
+    response.data?.image ||                            // direct field
+    response.data?.output?.image;                      // wrapped output
 
 if(!imageBase64){
-    return res.status(500).json({error:"No image returned"});
+    console.log("FULL RESPONSE DATA:", JSON.stringify(response.data));
+    return res.status(500).json({
+        error:"No image returned",
+        responseKeys: Object.keys(response.data || {}),
+        responseSample: JSON.stringify(response.data).slice(0, 300),
+    });
 }
 
 const imageUrl = await uploadImage(imageBase64);
