@@ -5,7 +5,7 @@
 
 Gen-Image is a full-stack web application that transforms text prompts into AI-generated images using the NVIDIA API, with secure user authentication and automatic cloud storage via AWS S3.
 
-URL-
+URL- gen-image-blond.vercel.app
 -----
 
 ## ✨ Features
