@@ -22,6 +22,9 @@ app.use(routes);
 app.get("/health", (req, res) => {
     res.send("Server is running");
 });
+app.get("/test", (req, res) => {
+    res.send("Server is running and test route is working");
+});
 
 connectDB();
 
