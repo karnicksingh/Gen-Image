@@ -23,7 +23,7 @@ app.get("/health", (req, res) => {
     res.send("Server is running");
 });
 app.get("/test", (req, res) => {
-    res.send("Server is running and test route is working");
+    res.send("Server is running and test route is working fine");
 });
 
 connectDB();
