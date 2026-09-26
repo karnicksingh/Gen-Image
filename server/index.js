@@ -20,7 +20,7 @@ const routes = require("./routes/routes.js");
 app.use(routes);
 
 app.get("/health", (req, res) => {
-    res.send("Server is running");
+    res.send("Server is running !!");
 });
 app.get("/test", (req, res) => {
     res.send("Server is running and test route is working fine");
